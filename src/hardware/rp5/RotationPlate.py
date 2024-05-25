@@ -1,4 +1,5 @@
 import gpiozero
+from gpiozero.pins.rpigpio import RPiGPIOFactory
 import time
 
 class RotationPlate:
@@ -39,7 +40,10 @@ class RotationPlate:
 
 if __name__ == "__main__":
     ps = RotationPlate(17)
-    ps.set_angle(0)
-    time.sleep(4)
-    ps.set_angle(180)
-    time.sleep(5)
+    for i in range(60):
+        ps.set_angle(i*3)
+        time.sleep(0.5)
+    # ps.set_angle(40)
+    # time.sleep(5)
+    # ps.set_angle(80)
+    # time.sleep(5)

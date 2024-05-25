@@ -5,7 +5,7 @@ class PreasureSensor:
     def __init__(self, gpio_in: int):
         self.gpio_in_num = gpio_in
 
-        self.gpio_button = gpiozero.Button(gpio_in)
+        self.gpio_button = gpiozero.Button(gpio_in, pull_up=True)
 
     def get_input(self):
         print("Preasure sensor read:", self.gpio_button.value)

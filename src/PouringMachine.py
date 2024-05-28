@@ -6,7 +6,7 @@ from src.procedures.rotate_plate import RotatePlate
 from src.procedures.pour_liquid import PourLiquid
 
 # from machine import Pin
-from time import sleep
+import time
 
 class PouringMachine:
 
@@ -18,21 +18,25 @@ class PouringMachine:
         # sleep(1)
         # self.led.on()
 
-        self.preasures = [PreasureSensor(10), PreasureSensor(11), PreasureSensor(12), PreasureSensor(13), PreasureSensor(14)]
-        self.positions = [0, 20, 40, 60, 80]
+        self.preasures = [PreasureSensor(0), PreasureSensor(1), PreasureSensor(2), PreasureSensor(3), PreasureSensor(4)]
+        self.positions = [0, 36, 72, 108, 144]
 
         self.pump = WaterPump(9)
 
-        self.plate = RotationPlate(7)
+        self.plate = RotationPlate(5)
     
     def start_pouring_procedure(self):
         try:
             for preasure, position in zip(self.preasures, self.positions):
                 RotatePlate.rotate_plate(self.plate, position)
-                if preasure.get_input() == 0:
+                time.sleep(1)
+                if preasure.get_input() == 1:
                     PourLiquid.pour_liquid(self.pump)
         except:
             self.reset_procedure()
+    
+    def get_preasure_values(self):
+        return [p.get_input() for p in self.preasures]
                 
     def reset_procedure(self):
         self.pump.stop()

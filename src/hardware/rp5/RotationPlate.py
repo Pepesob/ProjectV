@@ -1,6 +1,6 @@
 import gpiozero
-from gpiozero.pins.rpigpio import RPiGPIOFactory
 import time
+
 
 class RotationPlate:
 
@@ -17,7 +17,18 @@ class RotationPlate:
         initial_pos = self.ms_to_percentage(self.angle_to_ms(0))
         print("initial pos:", initial_pos)
         self.pwm_pin = gpiozero.PWMOutputDevice(pin=pwm_pin, active_high=True, initial_value=initial_pos, frequency=self.freq)
-        
+        # self.pwm_pin2 = gpiozero.AngularServo(pwm_pin, initial_angle=0, min_angle=0, max_angle=self.max_angle, min_pulse_width=self.min_ms * 1e-3, max_pulse_width=self.max_ms * 1e-3, frame_width=1/self.freq)
+        # self.pwm_pin3 = HardwarePWM(0, self.freq, 2)
+
+    def set_angle_angulaservo(self, value):
+        if not 0 <= value <= 180:
+            print("Wrong angle value!")
+            return
+        self.pwm_pin2.angle = value
+        print("Rotating to:", value)
+    
+    def stop(self):
+        self.pwm_pin2.angle = None
     
     def set_angle(self, value):
         if not 0 <= value <= 180:
@@ -40,10 +51,7 @@ class RotationPlate:
 
 if __name__ == "__main__":
     ps = RotationPlate(17)
-    for i in range(60):
-        ps.set_angle(i*3)
-        time.sleep(0.5)
-    # ps.set_angle(40)
-    # time.sleep(5)
-    # ps.set_angle(80)
-    # time.sleep(5)
+    ps.pwm_pin3.change_duty_cycle(0)
+    # for i in range(60):
+    #     ps.set_angle(i*3)
+    #     time.sleep(0.5)

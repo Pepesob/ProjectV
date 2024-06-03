@@ -1,22 +1,18 @@
 from src.hardware.PreasureSensor import PreasureSensor
 from src.hardware.WaterPump import WaterPump
 from src.hardware.RotationPlate import RotationPlate
+from src.hardware.Led import Led
 
 from src.procedures.rotate_plate import RotatePlate
 from src.procedures.pour_liquid import PourLiquid
 
-# from machine import Pin
 import time
 
 class PouringMachine:
 
     def __init__(self) -> None:
-        # self.led = Pin("LED", Pin.OUT)
-        # self.led.on()
-        # sleep(1)
-        # self.led.off()
-        # sleep(1)
-        # self.led.on()
+        self.led = Led()
+        self.led.on()
 
         self.preasures = [PreasureSensor(0), PreasureSensor(1), PreasureSensor(2), PreasureSensor(3), PreasureSensor(4)]
         self.positions = [0, 36, 72, 108, 144]

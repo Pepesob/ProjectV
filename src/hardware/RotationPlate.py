@@ -18,8 +18,8 @@ class RotationPlate:
         self.set_angle(0)
     
     def set_angle(self, value):
-        if not 0 <= value <= 180:
-            print("Wrong duty cycle value!")
+        if not (0 <= value <= 180):
+            print("Wrong duty cycle value!: " + str(value))
             return
         self.pwm_pin.duty_u16(self.ms_to_uint16(self.min_ms) + self.ms_to_uint16(self.angle_to_ms(value)))
         self.current_angle = value

@@ -2,7 +2,7 @@ from time import sleep
 
 
 class PourLiquid:
-    pouring_time_seconds = 5
+    pouring_time_seconds = 2
 
     @staticmethod
     def pour_liquid(water_pump):
